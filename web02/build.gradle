@@ -1,0 +1,54 @@
+// 자바 관련 그래들 명령어(컴파일, 테스트 등) 가져오기
+apply plugin: 'java'
+
+// 이클립스 설정파일을 관리(생성,삭제)하는 명령어 가져오기
+// 이클립스 설정파일이란?
+// .project, .classpath, .setting/*.*
+//apply plugin: 'eclipse'
+apply plugin: 'eclipse-wtp' // 이클립스 설정 파일 + 웹 애플리케이션 설정 파일
+
+// 웹 애플리케이션 관련 그래들 명령어를 가져온다.
+apply plugin: 'war'
+
+//자바 컴파일과 관련된 정보 설정하기
+compileJava {
+    sourceCompatibility = 1.7 // 소스 코드가 Java의 어떤 버전으로 작성되었는지 설정한다.
+    options.encoding = 'UTF-8' // 소스 코드가 어떤 문자 집합으로 인코딩 되었는지 설정한다.
+}
+
+// 웹 애플리케이션 설정 파일을 만들 때 사용하는 정보 설정
+eclipse {
+  wtp {
+    facet {
+      facet name:'jst.web', version:'3.1' //서블릿 API의 버전 지정한다.
+      facet name:'java', version:'1.7'
+    }
+  }
+}
+
+// 프로젝트의 버전을 설정한다.
+version = '1.0'
+
+// 의존 라이브러리 이름(그룹명:이름:버전)을 지정한다. => 자동으로 다운로드 받을 것이다.
+// 의존 라이브러리를 다운 받을 서버 정보를 설정한다.
+repositories {
+    mavenCentral() // 다운 받을 서버로 repo1.maven.org 서버를 지정한다. 
+}
+
+// 의존 라이브러리 이름을 알아내는 방법 => www.mvnrepository.com 사이트에서 검색하시오!
+dependencies {
+    //문법: compile '의존라이브러리명'
+    compile 'javax.servlet:jstl:1.2'
+    compile 'mysql:mysql-connector-java:5.1.34'
+    compile 'javax.servlet:javax.servlet-api:3.1.0'
+    compile 'org.mybatis:mybatis:3.2.8'
+}
+
+
+
+
+
+
+
+
+

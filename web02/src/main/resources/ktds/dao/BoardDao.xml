@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ktds.dao.BoardDao">
+	<select id="selectList" resultType="ktds.domain.Board">
+	select 
+	  bno as no,
+	  title,
+	  cnt as count,
+	  create_date as createDate
+	from boards
+	</select>
+	
+	<select id="selectOne"
+	   parameterType="int" 
+	   resultType="ktds.domain.Board">
+	select 
+    bno as no,
+    title,
+    contents,
+    cnt as count,
+    create_date as createDate
+  from boards
+  where bno=#{value}
+	</select>
+	
+	<delete id="delete" parameterType="int">
+	delete from boards where bno=#{value}
+	</delete>
+	
+  <insert id="insert" parameterType="ktds.domain.Board">
+  insert into boards(title, contents, create_date)
+  values(#{title}, #{contents}, now()) 
+  </insert>
+  
+  <update id="update" parameterType="ktds.domain.Board">
+  update boards set 
+    title=#{title},contents=#{contents},create_date=now() 
+  where bno=#{no}
+  </update>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
