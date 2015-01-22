@@ -10,8 +10,9 @@
 <h1>회원가입</h1>
 <form action="signUp.do" method="post" 
     enctype="multipart/form-data">
-아이디:<input name="id" type="text" 
-          placeholder="아이디를 입력하세요. ex)test1004"><br>
+아이디:<input id="id" name="id" type="text" 
+          placeholder="아이디를 입력하세요. ex)test1004">
+     <button type="button" onclick="checkId()">중복검사</button><br>
 암호:<input name="password" type="password" 
           placeholder="암호를 입력하세요."><br>
 암호확인:<input type="password" 
@@ -22,6 +23,26 @@
 <button type="submit">확인</button>
 <button type="button">취소</button>
 </form>
+
+<script type="text/javascript" src="../js/jquery-1.11.2.js"></script>
+<script>
+function checkId() {
+	//1. id 입력 상자의 값을 가져온다.
+	var id = $('#id').val();
+	
+	//2. 서버에 중복검사를 요청한다.
+	$.getJSON("check.do?id=" + id, function(obj){
+		if (obj.result == "") {
+			alert("사용 가능한 아이디입니다.");
+		} else {
+			alert("이미 등록된 아이디입니다.");
+		}
+	});
+}
+
+</script>
+
+
 </body>
 
 </html>
