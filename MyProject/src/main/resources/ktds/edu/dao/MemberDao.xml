@@ -9,6 +9,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   insert into members(mid, pwd, email, photo, create_date)
   values(#{id}, #{password}, #{email}, #{photo}, now()) 
   </insert>
+  
+  <select id="loginInfo" parameterType="map" resultType="Member">
+  select
+    mid as id,
+    email,
+    photo
+  from members
+  where mid=#{id} and pwd=#{password}
+  </select>
+  
+  <select id="exist" parameterType="string" resultType="int">
+  select count(mid)
+  from members
+  where mid=#{id}
+  </select>
 </mapper>
 
 
