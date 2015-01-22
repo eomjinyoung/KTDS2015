@@ -12,6 +12,7 @@
 <c:choose>
   <c:when test="${empty loginInfo}">
     <a href="member/login.html">로그인</a>
+    <a href="member/form.html">회원가입</a>
   </c:when>
   <c:otherwise>
 		<img style="width:20px; height:20px;" 

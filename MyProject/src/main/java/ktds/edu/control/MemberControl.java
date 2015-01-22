@@ -38,7 +38,7 @@ public class MemberControl {
     } catch (Exception e) {
       e.printStackTrace();
     }
-    return "redirect:../index.html";
+    return "redirect:../";
   }
   
   @RequestMapping(value="/login", method=RequestMethod.POST)

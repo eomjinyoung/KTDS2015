@@ -9,15 +9,15 @@
 <body>
 <h1>회원가입</h1>
 <form action="signUp.do" method="post" 
-    enctype="multipart/form-data">
-아이디:<input id="id" name="id" type="text" 
+    enctype="multipart/form-data" onsubmit="return validate();">
+아이디:<input id="id" name="id" type="text" onchange="checkedId=false;" 
           placeholder="아이디를 입력하세요. ex)test1004">
      <button type="button" onclick="checkId()">중복검사</button><br>
-암호:<input name="password" type="password" 
+암호:<input id="password" name="password" type="password" 
           placeholder="암호를 입력하세요."><br>
-암호확인:<input type="password" 
+암호확인:<input id="password2" type="password" 
           placeholder="확인차 암호를 다시 입력하세요."><br>
-이메일:<input name="email" type="email" 
+이메일:<input id="email" name="email" type="email" 
           placeholder="이메일을 입력하세요"><br>
 사진:<input name="file" type="file"><br>          
 <button type="submit">확인</button>
@@ -26,6 +26,8 @@
 
 <script type="text/javascript" src="../js/jquery-1.11.2.js"></script>
 <script>
+var checkedId = false;
+
 function checkId() {
 	//1. id 입력 상자의 값을 가져온다.
 	var id = $('#id').val();
@@ -34,12 +36,41 @@ function checkId() {
 	$.getJSON("check.do?id=" + id, function(obj){
 		if (obj.result == "") {
 			alert("사용 가능한 아이디입니다.");
+			checkedId = true;
 		} else {
 			alert("이미 등록된 아이디입니다.");
+			checkedId = false;
 		}
 	});
 }
 
+function validate() {
+	if ($('#id').val() == "") {
+		alert("아이디는 필수 입력 항목입니다.");
+		return false;
+	}
+	
+	if ($('#password').val() == "") {
+    alert("암호는 필수 입력 항목입니다.");
+    return false;
+  }
+	
+	if ($('#password').val() != $('#password2').val()) {
+		alert("암호가 일치하지 않습니다.");
+		return false;
+	}
+	
+	if ($('#email').val() == "") {
+    alert("이메일은 필수 입력 항목입니다.");
+    return false;
+  }
+	
+	if (!checkedId) {
+    alert("아이디 중복검사 하세요.");
+    return false;
+  }
+	return true;
+}
 </script>
 
 
