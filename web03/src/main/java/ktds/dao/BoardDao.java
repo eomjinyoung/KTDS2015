@@ -1,5 +1,6 @@
 package ktds.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import ktds.domain.Board;
@@ -15,15 +16,31 @@ public class BoardDao {
   @Autowired
   SqlSessionFactory sqlSessionFactory;
   
-  public List<Board> selectList() {
+  public List<Board> selectList(int startIndex, int pageSize) {
     SqlSession sqlSession = sqlSessionFactory.openSession();
     try {
-      return sqlSession.selectList("ktds.dao.BoardDao.selectList");
+      HashMap<String,Integer> map = new HashMap<String,Integer>();
+      map.put("startIndex", startIndex);
+      map.put("pageSize", pageSize);
+      return sqlSession.selectList("ktds.dao.BoardDao.selectList", map);
     
     } catch (Exception e) {
       e.printStackTrace();
       return null;
     
+    } finally {
+      sqlSession.close();
+    }
+  }
+  
+  public int totalCount() {
+    SqlSession sqlSession = sqlSessionFactory.openSession();
+    try {
+      return sqlSession.selectOne("ktds.dao.BoardDao.totalCount");
+    } catch (Exception e) {
+      e.printStackTrace();
+      return 0;
+      
     } finally {
       sqlSession.close();
     }

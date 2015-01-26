@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/board")
@@ -19,8 +20,19 @@ public class BoardControl {
   
   // http://localhost:8080/web03/board/list.do 요청을 처리하는 메서드!
   @RequestMapping("/list")
-  public String list(Model model) {
-    model.addAttribute("list", boardDao.selectList());
+  public String list(
+      @RequestParam(defaultValue="1") int pageNo, 
+      Model model) {
+    int pageSize = 4;
+    int startIndex = (pageNo - 1) * pageSize;
+    int totalCount = boardDao.totalCount(); 
+    int totalPage =  totalCount / pageSize;
+    if ((totalCount % pageSize) > 0)
+      totalPage++;
+    
+    model.addAttribute("list", boardDao.selectList(startIndex, pageSize));
+    model.addAttribute("pageNo", pageNo);
+    model.addAttribute("totalPage", totalPage);
     return "/board/list.jsp";
   }
   

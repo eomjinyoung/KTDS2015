@@ -32,6 +32,15 @@
 </c:forEach>
 
 </table>
+
+<c:if test="${pageNo > 1}">
+<a href="list.do?pageNo=${pageNo - 1}" 
+    class="btn btn-default">이전</a>
+</c:if>
+<c:if test="${pageNo < totalPage}">
+<a href="list.do?pageNo=${pageNo + 1}" 
+    class="btn btn-default">다음</a>
+</c:if>
 <a href='form.html' class="btn btn-primary">글쓰기</a><br>
 </div><!-- container div -->
 </body></html>
